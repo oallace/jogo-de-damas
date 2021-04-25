@@ -5,11 +5,11 @@ public class Tabuleiro {
 	int numPecasBrancas;
 	int numPecasPretas;
 	char jogadorAtual;      // 'B' : Brancas ; 'P' : Pretas
-	Peca pecaCapturada;     // PeÁa que foi capturada em um dado turno;
+	Peca pecaCapturada;     // Pe√ßa que foi capturada em um dado turno;
 	
 	/* Descreve a forma inicial do tabuleiro:
-    1: espaÁo com peÁa
-    0: espaÁo vazio
+    1: espa√ßo com pe√ßa
+    0: espa√ßo vazio
     */
     private static int formaTabuleiro[][] = {
         {0, 1, 0, 1, 0, 1, 0, 1},
@@ -47,7 +47,7 @@ public class Tabuleiro {
     }
     
     
-    // Checa se o espaÁo informado est· dentro do tabuleiro
+    // Checa se o espa√ßo informado est√° dentro do tabuleiro
     private boolean ehEspacoValido(int i, int j){
         if (i < 0 || i > 7 || j < 0 || j > 7){
             return false;
@@ -58,23 +58,23 @@ public class Tabuleiro {
     }
     
     
-    // Muda o turno apÛs um movimento, caso este ˙ltimo n„o tenha comido nenhuma peÁa inimiga.
+    // Muda o turno ap√≥s um movimento, caso este √∫ltimo n√£o tenha comido nenhuma pe√ßa inimiga.
     public void mudarTurno() {
     	//
     	//
     }
     
     
-    // Promover um pe„o para uma dama.
+    // Promover um pe√£o para uma dama.
     public void promoverPeca() {
     	//
     }
     
     
-    // Criar metodo para capturar peÁa : Opcional, da para fazer isso dentro do metodo mover.
+    // Criar metodo para capturar pe√ßa : Opcional, da para fazer isso dentro do metodo mover.
     
     
-    // Realiza o movimento indicado, quando possÌvel. Caso contr·rio, n„o faz nada.
+    // Realiza o movimento indicado, quando poss√≠vel. Caso contr√°rio, n√£o faz nada.
     public void mover(int iInicio, int jInicio, int iFim, int jFim) {
     	//
     	//

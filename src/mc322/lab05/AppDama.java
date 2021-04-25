@@ -9,7 +9,7 @@ public class AppDama {
         CSVReader csv = new CSVReader();
         int iInicio, jInicio, iFim, jFim;
 
-        // lê os comandos
+        // lï¿½ os comandos
         csv.setDataSource(caminhoCSV);
         comandos = csv.requestCommands();
         // inicia o vetor resultado:
