@@ -1,22 +1,22 @@
 package mc322.lab05;
 
 public class Tabuleiro {
-	Peca posicoes[][];
-	int numPecasBrancas;
-	int numPecasPretas;
-	char jogadorAtual;      // 'B' : Brancas ; 'P' : Pretas
-	Peca pecaCapturada;     // Peça que foi capturada em um dado turno;
+	private Peca posicoes[][];      // Guarda as peças no tabuleiro
+	private int numPecasBrancas;
+	private int numPecasPretas;
+	private char jogadorAtual;      // 'B' : Brancas ; 'P' : Pretas
+	private Peca pecaCapturada;     // Peça que foi capturada em um dado turno;
 	
 	/* Descreve a forma inicial do tabuleiro:
-    1: espaço com peça
-    0: espaço vazio
+    1: espaço pode ser ocupado por uma peça
+    0: espaço inválido
     */
     private static int formaTabuleiro[][] = {
         {0, 1, 0, 1, 0, 1, 0, 1},
         {1, 0, 1, 0, 1, 0, 1, 0},
         {0, 1, 0, 1, 0, 1, 0, 1},
-        {0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0},
+        {1, 0, 1, 0, 1, 0, 1, 0},
+        {0, 1, 0, 1, 0, 1, 0, 1},
         {1, 0, 1, 0, 1, 0, 1, 0},
         {0, 1, 0, 1, 0, 1, 0, 1},
         {1, 0, 1, 0, 1, 0, 1, 0},
@@ -28,33 +28,39 @@ public class Tabuleiro {
     	posicoes = new Peca[8][8];
     	numPecasBrancas = 12;
     	numPecasPretas = 12;
-    	jogadorAtual = 'B';
+    	jogadorAtual = 'B'; // Corrigir: depende do primeiro comando
     	pecaCapturada = null;
     	
     	for (int i = 0; i < 8; i++) {
     		for (int j = 0; j < 8; j++) {
-    			if (formaTabuleiro[i][j] == 0) {
-    				posicoes[i][j] = null;
+    			if (ehEspacoValido(i, j)) {
+                    if (i < 3) {
+                        posicoes[i][j] = new Peca('P', '1', i, j);
+                    }
+                    else if (i > 4){
+                        posicoes[i][j] = new Peca('B', '1', i, j);
+                    }
+                    else {
+                        posicoes[i][j] = null;
+                    }
     			}
-    			else if (formaTabuleiro[i][j] == 1 && i < 3) {
-    				posicoes[i][j] = new Peao('P', '1', i, j);
-    			}
-    			else {
-    				posicoes[i][j] = new Peao('B', '1', i, j);
-    			}
-    		}
+                else{
+                    posicoes[i][j] = null;
+                }
+            }
     	}
     }
     
     
-    // Checa se o espaço informado está dentro do tabuleiro
+    // Checa se o espaço informado pode ser ocupado por uma peça
     private boolean ehEspacoValido(int i, int j){
-        if (i < 0 || i > 7 || j < 0 || j > 7){
-            return false;
+        if (i >= 0 && i < 8 && j >= 0 && j < 8){
+            if (formaTabuleiro[i][j] == 1)
+            {
+                return true;
+            }
         }
-        else{
-            return true;
-        }
+        return false;
     }
     
     
@@ -87,7 +93,7 @@ public class Tabuleiro {
 
         for(int j = 0; j < 8; j++){
         	if(posicoes[i][j] != null){
-        		res += posicoes[i][j].apresenta();
+        		res += posicoes[i][j];
             }
             else{
             	res += '-';
@@ -100,14 +106,17 @@ public class Tabuleiro {
     
  // Apresenta o estado atual do tabuleiro;
     public void apresenta(){
+        String linhaAtual;
+
         for(int i = 0; i < 8; i++){
-            System.out.printf("%d ", i + 1);
-            System.out.print(stringLinha(i));
+            System.out.print(i + 1);
+            linhaAtual = stringLinha(i);
+            for (int k = 0; k < linhaAtual.length(); k++){
+                System.out.print(" " + linhaAtual.charAt(k));
+            }
         }
-        System.out.println("  abcdefg");
-        System.out.println();
+        System.out.println("  a b c d e f g h");
     }
-    
     
     public String toString(){
         String res = "";
