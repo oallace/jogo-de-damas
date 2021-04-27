@@ -35,10 +35,10 @@ public class Tabuleiro {
     		for (int j = 0; j < 8; j++) {
     			if (ehEspacoValido(i, j)) {
                     if (i < 3) {
-                        posicoes[i][j] = new Peca('P', '1', i, j, this);
+                        posicoes[i][j] = new Peao('P', i, j, this);
                     }
                     else if (i > 4){
-                        posicoes[i][j] = new Peca('B', '1', i, j, this);
+                        posicoes[i][j] = new Peao('B', i, j, this);
                     }
                     else {
                         posicoes[i][j] = null;
@@ -100,7 +100,7 @@ public class Tabuleiro {
         {
             int posicaoPeca[] = pecaCapturada.getPosicao();
             posicoes[posicaoPeca[0]][posicaoPeca[1]] = null;
-            setPecaCapturada(null);;
+            setPecaCapturada(null);
         }
     }
     
