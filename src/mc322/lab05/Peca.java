@@ -1,9 +1,9 @@
 package mc322.lab05;
 
 public class Peca {
-	private char jogador;    // 'B' : Jogador das brancas ; 'P' : Jogador das Pretas
-	private int posicao[] = new int[2];
-	private Tabuleiro tab; // Tabuleiro ao qual a peça pertence.
+	protected char jogador;    // 'B' : Jogador das brancas ; 'P' : Jogador das Pretas
+	protected int posicao[] = new int[2];
+	protected Tabuleiro tab; // Tabuleiro ao qual a peça pertence.
 	
 	Peca(char jogador, int i, int j, Tabuleiro tab){
 		this.jogador = jogador;
