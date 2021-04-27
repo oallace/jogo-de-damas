@@ -6,7 +6,7 @@ public class Tabuleiro {
 	private int numPecasPretas;
 	private char jogadorAtual;      // 'B' : Brancas ; 'P' : Pretas
 	private Peca pecaCapturada;     // Peça que foi capturada em um dado turno;
-	
+
 	/* Descreve a forma inicial do tabuleiro:
     1: espaço pode ser ocupado por uma peça
     0: espaço inválido
@@ -35,10 +35,10 @@ public class Tabuleiro {
     		for (int j = 0; j < 8; j++) {
     			if (ehEspacoValido(i, j)) {
                     if (i < 3) {
-                        posicoes[i][j] = new Peca('P', '1', i, j);
+                        posicoes[i][j] = new Peca('P', '1', i, j, this);
                     }
                     else if (i > 4){
-                        posicoes[i][j] = new Peca('B', '1', i, j);
+                        posicoes[i][j] = new Peca('B', '1', i, j, this);
                     }
                     else {
                         posicoes[i][j] = null;
@@ -50,10 +50,14 @@ public class Tabuleiro {
             }
     	}
     }
-    
+
+    public void setPecaCapturada(Peca p)
+    {
+        this.pecaCapturada = p;
+    }
     
     // Checa se o espaço informado pode ser ocupado por uma peça
-    private boolean ehEspacoValido(int i, int j){
+    public boolean ehEspacoValido(int i, int j){
         if (i >= 0 && i < 8 && j >= 0 && j < 8){
             if (formaTabuleiro[i][j] == 1)
             {
@@ -62,12 +66,25 @@ public class Tabuleiro {
         }
         return false;
     }
+
+    // retorna se o espaço informado está vazio
+    public boolean ehEspacoVazio(int i, int j)
+    {
+        if (ehEspacoValido(i, j))
+        {
+            if (posicoes[i][j] == null)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     
     
-    // Muda o turno após um movimento, caso este último não tenha comido nenhuma peça inimiga.
-    public void mudarTurno() {
-    	//
-    	//
+    // Altera o  jogador do movimento atual
+    public void mudarTurno()
+    {
+    	this.jogadorAtual = (this.jogadorAtual == 'B') ? 'P' : 'B'; 
     }
     
     
@@ -77,13 +94,35 @@ public class Tabuleiro {
     }
     
     
-    // Criar metodo para capturar peça : Opcional, da para fazer isso dentro do metodo mover.
+    private void capturarPeca()
+    {
+        if (pecaCapturada != null)
+        {
+            int posicaoPeca[] = pecaCapturada.getPosicao();
+            posicoes[posicaoPeca[0]][posicaoPeca[1]] = null;
+            setPecaCapturada(null);;
+        }
+    }
     
     
     // Realiza o movimento indicado, quando possível. Caso contrário, não faz nada.
-    public void mover(int iInicio, int jInicio, int iFim, int jFim) {
-    	//
-    	//
+    // Por enquanto leva em conta só peões
+    public void mover(int iInicio, int jInicio, int iFim, int jFim)
+    {
+    	if (ehEspacoValido(iInicio, jInicio) && !ehEspacoVazio(iInicio, jInicio))
+        {
+            Peca pecaSelecionada = posicoes[iInicio][jInicio];
+
+            if (pecaSelecionada.ehMovimentoValido(iFim, jFim))
+            {
+                // capturar Peca:
+                capturarPeca();
+                // atualiza as coordenadas de inicio e fim:
+                pecaSelecionada.setPosicao(iFim, jFim);
+                posicoes[iFim][jFim] = pecaSelecionada;
+                posicoes[iInicio][jInicio] = null;
+            }
+        }
     }
     
     
@@ -115,7 +154,7 @@ public class Tabuleiro {
                 System.out.print(" " + linhaAtual.charAt(k));
             }
         }
-        System.out.println("  a b c d e f g h");
+        System.out.println("  a b c d e f g h\n");
     }
     
     public String toString(){
