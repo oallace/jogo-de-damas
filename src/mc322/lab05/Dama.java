@@ -1,11 +1,20 @@
 package mc322.lab05;
 
-public class Dama extends Peca{
-	Dama(char jogador, char tipoPeca, int posX, int posY){
-		super(jogador, tipoPeca, posX, posY);
+public class Dama extends Peca
+{
+	Dama(char jogador, int i, int j, Tabuleiro tab)
+	{
+		super(jogador, i, j, tab);
 	}
 	
-	public boolean ehMovimentoValidoDama() {
-		//
+	public boolean ehMovimentoValido(int i, int j)
+	{
+		// Deve setar a peça que será comida caso o movimento seja válido; (essa conexão é mesmo boa?)
+		return true;
+	}
+	
+	public String toString()
+	{
+		return (jogador == 'B') ? "B" : "P";
 	}
 }
