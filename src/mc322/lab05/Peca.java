@@ -15,6 +15,11 @@ public class Peca {
 		setPosicao(i, j);
 	}
 
+	public int[] getPosicao()
+	{
+		return posicao;
+	}
+
 	public void setPosicao(int i, int j)
 	{
 		this.posicao[0] = i;
