@@ -9,11 +9,26 @@ public class AppDama {
         CSVReader csv = new CSVReader();
         int iInicio, jInicio, iFim, jFim;
 
-        // l� os comandos
+        // lê os comandos
         csv.setDataSource(caminhoCSV);
         comandos = csv.requestCommands();
+        
         // inicia o vetor resultado:
         resultado = new String[comandos.length];
+        
+        // Descobre o jogador inicial
+        for (int i = 0; i < comandos.length; i++) {
+        	System.out.printf("Source: %s\n", comandos[i].substring(0,2));
+            jInicio = Character.getNumericValue(comandos[i].charAt(0)) - Character.getNumericValue('a');
+            iInicio = Character.getNumericValue(comandos[i].charAt(1)) - Character.getNumericValue('1');
+            
+            if (tab.ehEspacoValido(iInicio, jInicio) && !tab.ehEspacoVazio(iInicio, jInicio)) {
+            	char jogadorInicial = tab.getPeca(iInicio, jInicio).getJogador();
+            	tab.setJogadorAtual(jogadorInicial);
+            	break;
+            }
+        }
+        
         // apresenta o tabuleiro:
         System.out.println("Tabuleiro inicial:");
         tab.apresenta();
