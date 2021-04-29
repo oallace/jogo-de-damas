@@ -5,7 +5,7 @@ public class Tabuleiro {
 	private int numPecasBrancas;
 	private int numPecasPretas;
 	private char jogadorAtual;      // 'B' : Brancas ; 'P' : Pretas
-	private Peca pecaCapturada;     // Peça que foi capturada em um dado turno;
+	private Peca pecaCapturada;     // Peça que foi capturada em um dado turno
 
 	/* Descreve a forma inicial do tabuleiro:
     1: espaço pode ser ocupado por uma peça
@@ -28,8 +28,8 @@ public class Tabuleiro {
     	posicoes = new Peca[8][8];
     	numPecasBrancas = 12;
     	numPecasPretas = 12;
-    	jogadorAtual = 'B'; // Corrigir: depende do primeiro comando
     	pecaCapturada = null;
+    	jogadorAtual = '0';  // Inicialmente ainda não se sabe o jogador inicial.
     	
     	for (int i = 0; i < 8; i++) {
     		for (int j = 0; j < 8; j++) {
@@ -50,17 +50,30 @@ public class Tabuleiro {
             }
     	}
     }
+    
+    public Peca getPeca(int i, int j) {
+    	if (ehEspacoValido(i, j) && !ehEspacoVazio(i, j)) {
+    		return this.posicoes[i][j];
+    	}
+    	return null;
+    }
+    
+    public char getJogadorAtual() {
+    	return this.jogadorAtual;
+    }
+    
+    public void setJogadorAtual(char jogador) {
+    	this.jogadorAtual = jogador;
+    }
 
-    public void setPecaCapturada(Peca p)
-    {
+    public void setPecaCapturada(Peca p){
         this.pecaCapturada = p;
     }
     
     // Checa se o espaço informado pode ser ocupado por uma peça
     public boolean ehEspacoValido(int i, int j){
         if (i >= 0 && i < 8 && j >= 0 && j < 8){
-            if (formaTabuleiro[i][j] == 1)
-            {
+            if (formaTabuleiro[i][j] == 1){
                 return true;
             }
         }
@@ -88,9 +101,16 @@ public class Tabuleiro {
     }
     
     
-    // Promover um peão para uma dama.
-    public void promoverPeca() {
-    	//
+    // Promover um peão para uma dama caso necessário.
+    public void promoverPeca(Peca peca) {
+    	if (peca instanceof Peao) {
+    		int posicaoPeca[] = peca.getPosicao();
+			char jogador = peca.getJogador();
+			
+    		if ((posicaoPeca[0] == 7 && jogador == 'B') || (posicaoPeca[0] == 0 && jogador == 'P')) {
+    			this.posicoes[posicaoPeca[0]][posicaoPeca[1]] = new Dama(jogador, posicaoPeca[0], posicaoPeca[1], this);
+    		}
+    	}
     }
     
     
@@ -109,7 +129,8 @@ public class Tabuleiro {
     // Por enquanto leva em conta só peões
     public void mover(int iInicio, int jInicio, int iFim, int jFim)
     {
-    	if (ehEspacoValido(iInicio, jInicio) && !ehEspacoVazio(iInicio, jInicio))
+    	if (ehEspacoValido(iInicio, jInicio) && !ehEspacoVazio(iInicio, jInicio) && posicoes[iInicio][jInicio].getJogador() == this.jogadorAtual
+    		&& ehEspacoValido(iFim, jFim) && ehEspacoVazio(iFim, jFim))
         {
             Peca pecaSelecionada = posicoes[iInicio][jInicio];
 
@@ -117,10 +138,14 @@ public class Tabuleiro {
             {
                 // capturar Peca:
                 capturarPeca();
+                
                 // atualiza as coordenadas de inicio e fim:
                 pecaSelecionada.setPosicao(iFim, jFim);
                 posicoes[iFim][jFim] = pecaSelecionada;
                 posicoes[iInicio][jInicio] = null;
+                
+                // Promove a peça caso seja necessário
+                promoverPeca(pecaSelecionada);
             }
         }
     }
