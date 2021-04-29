@@ -11,26 +11,30 @@ public class Peca {
 		setPosicao(i, j);
 	}
 
-	public int[] getPosicao()
-	{
+	public int[] getPosicao(){
 		return posicao;
 	}
 
-	public void setPosicao(int i, int j)
-	{
+	public void setPosicao(int i, int j){
 		this.posicao[0] = i;
 		this.posicao[1] = j;
+	}
+	
+	public char getJogador() {
+		return this.jogador;
+	}
+	
+	public Tabuleiro getTabuleiro() {
+		return this.tab;
 	}
 
 	// Retorna se o movimento pode ser realizado e seleciona a peça que foi capturada
 	// durante o processo
-	public boolean ehMovimentoValido(int iAlvo, int jAlvo)
-	{
+	public boolean ehMovimentoValido(int iAlvo, int jAlvo){
 		return true;
 	}
 
-	public String toString()
-	{	
+	public String toString(){	
 		return "X"; // Peça genérica;
 	}
 }
