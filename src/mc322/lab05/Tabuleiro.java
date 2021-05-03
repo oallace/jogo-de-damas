@@ -1,7 +1,7 @@
 package mc322.lab05;
 
 public class Tabuleiro {
-	private Peca posicoes[][];      // Guarda as peças no tabuleiro
+	private Peca pecas[][];      // Guarda as peças no tabuleiro
 	private int numPecasBrancas;
 	private int numPecasPretas;
 	private char jogadorAtual;      // 'B' : Brancas ; 'P' : Pretas
@@ -25,7 +25,7 @@ public class Tabuleiro {
     
     // Inicia um novo tabuleiro completo
     Tabuleiro(){
-    	posicoes = new Peca[8][8];
+    	pecas = new Peca[8][8];
     	numPecasBrancas = 12;
     	numPecasPretas = 12;
     	pecaCapturada = null;
@@ -35,17 +35,17 @@ public class Tabuleiro {
     		for (int j = 0; j < 8; j++) {
     			if (ehEspacoValido(i, j)) {
                     if (i < 3) {
-                        posicoes[i][j] = new Peao('P', i, j, this);
+                        pecas[i][j] = new Peao('P', i, j, this);
                     }
                     else if (i > 4){
-                        posicoes[i][j] = new Peao('B', i, j, this);
+                        pecas[i][j] = new Peao('B', i, j, this);
                     }
                     else {
-                        posicoes[i][j] = null;
+                        pecas[i][j] = null;
                     }
     			}
                 else{
-                    posicoes[i][j] = null;
+                    pecas[i][j] = null;
                 }
             }
     	}
@@ -53,7 +53,7 @@ public class Tabuleiro {
     
     public Peca getPeca(int i, int j) {
     	if (ehEspacoValido(i, j) && !ehEspacoVazio(i, j)) {
-    		return this.posicoes[i][j];
+    		return this.pecas[i][j];
     	}
     	return null;
     }
@@ -85,7 +85,7 @@ public class Tabuleiro {
     {
         if (ehEspacoValido(i, j))
         {
-            if (posicoes[i][j] == null)
+            if (pecas[i][j] == null)
             {
                 return true;
             }
@@ -108,7 +108,7 @@ public class Tabuleiro {
 			char jogador = peca.getJogador();
 			
     		if ((posicaoPeca[0] == 7 && jogador == 'B') || (posicaoPeca[0] == 0 && jogador == 'P')) {
-    			this.posicoes[posicaoPeca[0]][posicaoPeca[1]] = new Dama(jogador, posicaoPeca[0], posicaoPeca[1], this);
+    			this.pecas[posicaoPeca[0]][posicaoPeca[1]] = new Dama(jogador, posicaoPeca[0], posicaoPeca[1], this);
     		}
     	}
     }
@@ -118,21 +118,29 @@ public class Tabuleiro {
     {
         if (pecaCapturada != null)
         {
+            if (pecaCapturada.getJogador() == 'B')
+            {
+                this.numPecasBrancas--;
+            }
+            else
+            {
+                this.numPecasPretas--;
+            }
             int posicaoPeca[] = pecaCapturada.getPosicao();
-            posicoes[posicaoPeca[0]][posicaoPeca[1]] = null;
+            pecas[posicaoPeca[0]][posicaoPeca[1]] = null;
             setPecaCapturada(null);
         }
     }
     
     
     // Realiza o movimento indicado, quando possível. Caso contrário, não faz nada.
-    // Por enquanto leva em conta só peões
-    public void mover(int iInicio, int jInicio, int iFim, int jFim)
+    // to-do: incluir checagem de promoção de peças
+    public void solicitaMovimento(int iInicio, int jInicio, int iFim, int jFim)
     {
-    	if (ehEspacoValido(iInicio, jInicio) && !ehEspacoVazio(iInicio, jInicio) && posicoes[iInicio][jInicio].getJogador() == this.jogadorAtual
+    	if (ehEspacoValido(iInicio, jInicio) && !ehEspacoVazio(iInicio, jInicio) && pecas[iInicio][jInicio].getJogador() == this.jogadorAtual
     		&& ehEspacoValido(iFim, jFim) && ehEspacoVazio(iFim, jFim))
         {
-            Peca pecaSelecionada = posicoes[iInicio][jInicio];
+            Peca pecaSelecionada = pecas[iInicio][jInicio];
 
             if (pecaSelecionada.ehMovimentoValido(iFim, jFim))
             {
@@ -141,8 +149,8 @@ public class Tabuleiro {
                 
                 // atualiza as coordenadas de inicio e fim:
                 pecaSelecionada.setPosicao(iFim, jFim);
-                posicoes[iFim][jFim] = pecaSelecionada;
-                posicoes[iInicio][jInicio] = null;
+                pecas[iFim][jFim] = pecaSelecionada;
+                pecas[iInicio][jInicio] = null;
                 
                 // Promove a peça caso seja necessário
                 promoverPeca(pecaSelecionada);
@@ -156,8 +164,8 @@ public class Tabuleiro {
         String res = "";
 
         for(int j = 0; j < 8; j++){
-        	if(posicoes[i][j] != null){
-        		res += posicoes[i][j];
+        	if(pecas[i][j] != null){
+        		res += pecas[i][j];
             }
             else{
             	res += '-';
@@ -168,8 +176,7 @@ public class Tabuleiro {
     }
     
     
- // Apresenta o estado atual do tabuleiro;
-    public void apresenta(){
+    public void imprimirTabuleiro(){
         String linhaAtual;
 
         for(int i = 0; i < 8; i++){
@@ -190,5 +197,10 @@ public class Tabuleiro {
         }
 
         return res;
+    }
+
+    public void exportarArquivo()
+    {
+
     }
 }

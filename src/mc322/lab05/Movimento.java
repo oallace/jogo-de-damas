@@ -14,6 +14,6 @@ public class Movimento {
 	// até chegar no limite de movimentos (no caso da Dama, apenas quando chegar na borda do tabuleiro) ou encontrar um aliado ou
 	// inimigo.
 	public boolean untilBlockedPath() {
-		//
+		return false;
 	}
 }
