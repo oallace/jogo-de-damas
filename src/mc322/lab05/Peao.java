@@ -7,10 +7,46 @@ public class Peao extends Peca
 		super(jogador, i, j, tab);
 	}
 	
-	public boolean ehMovimentoValidoPeao(int i, int j)
+	public boolean ehMovimentoValido(int iAlvo, int jAlvo)
 	{
-		// Deve setar a peça que será comida caso o movimento seja válido; (essa conexão é mesmo boa?)
-		return true;
+		int direcaoDiagonal[] = super.obterDirecaoDiagonal(iAlvo, jAlvo);
+		if (direcaoDiagonal == null) {
+			return false;
+		}
+		
+		return this.movimento.untilBlockedPath(this, direcaoDiagonal, iAlvo, jAlvo, 1);
+	}
+	
+	public boolean ehPossivelComer() {
+		if (this.getTabuleiro().ehEspacoValido(this.posicao[0]+2, this.posicao[1]+2) && this.getTabuleiro().ehEspacoVazio(this.posicao[0]+2, this.posicao[1]+2)) {
+			if (ehMovimentoValido(this.posicao[0]+2, this.posicao[1]+2)) {
+				this.getTabuleiro().setPecaCapturada(null);
+				return true;
+			}
+		}
+		
+		else if (this.getTabuleiro().ehEspacoValido(this.posicao[0]+2, this.posicao[1]-2) && this.getTabuleiro().ehEspacoVazio(this.posicao[0]+2, this.posicao[1]-2)) {
+			if (ehMovimentoValido(this.posicao[0]+2, this.posicao[1]-2)) {
+				this.getTabuleiro().setPecaCapturada(null);
+				return true;
+			}
+		}
+		
+		else if (this.getTabuleiro().ehEspacoValido(this.posicao[0]-2, this.posicao[1]+2) && this.getTabuleiro().ehEspacoVazio(this.posicao[0]-2, this.posicao[1]+2)) {
+			if (ehMovimentoValido(this.posicao[0]-2, this.posicao[1]+2)) {
+				this.getTabuleiro().setPecaCapturada(null);
+				return true;
+			}
+		}
+		
+		else if (this.getTabuleiro().ehEspacoValido(this.posicao[0]-2, this.posicao[1]-2) && this.getTabuleiro().ehEspacoVazio(this.posicao[0]-2, this.posicao[1]-2)) {
+			if (ehMovimentoValido(this.posicao[0]-2, this.posicao[1]-2)) {
+				this.getTabuleiro().setPecaCapturada(null);
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	public String toString()
