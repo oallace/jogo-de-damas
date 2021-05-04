@@ -66,6 +66,10 @@ public class Tabuleiro {
     	this.jogadorAtual = jogador;
     }
 
+    public Peca getPecaCapturada() {
+    	return this.pecaCapturada;
+    }
+    
     public void setPecaCapturada(Peca p){
         this.pecaCapturada = p;
     }
@@ -143,6 +147,12 @@ public class Tabuleiro {
 
             if (pecaSelecionada.ehMovimentoValido(iFim, jFim))
             {
+            	
+            	// Mudar turno se necessario
+            	if (this.pecaCapturada != null && pecaSelecionada.ehPossivelComer()) {
+            		mudarTurno();
+            	}
+            	
                 // capturar Peca:
                 capturarPeca();
                 
