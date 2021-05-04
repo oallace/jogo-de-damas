@@ -31,7 +31,7 @@ public class Peca {
 	// Retorna se o movimento pode ser realizado e seleciona a peça que foi capturada
 	// durante o processo
 	public boolean ehMovimentoValido(int iAlvo, int jAlvo){
-		return true;
+		return false;
 	}
 
 	public String toString(){	
