@@ -107,7 +107,7 @@ public class Tabuleiro {
     		int posicaoPeca[] = peca.getPosicao();
 			char jogador = peca.getJogador();
 			
-    		if ((posicaoPeca[0] == 7 && jogador == 'B') || (posicaoPeca[0] == 0 && jogador == 'P')) {
+    		if ((posicaoPeca[0] == 0 && jogador == 'B') || (posicaoPeca[0] == 7 && jogador == 'P')) {
     			this.pecas[posicaoPeca[0]][posicaoPeca[1]] = new Dama(jogador, posicaoPeca[0], posicaoPeca[1], this);
     		}
     	}
