@@ -134,7 +134,6 @@ public class Tabuleiro {
     
     
     // Realiza o movimento indicado, quando possível. Caso contrário, não faz nada.
-    // to-do: incluir checagem de promoção de peças
     public void solicitaMovimento(int iInicio, int jInicio, int iFim, int jFim)
     {
     	if (ehEspacoValido(iInicio, jInicio) && !ehEspacoVazio(iInicio, jInicio) && pecas[iInicio][jInicio].getJogador() == this.jogadorAtual
