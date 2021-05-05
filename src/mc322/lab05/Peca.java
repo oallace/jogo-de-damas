@@ -46,20 +46,20 @@ public class Peca {
 			return null;
 		}
 		else if ((this.posicao[0] - iAlvo) == (this.posicao[1] - jAlvo) && (this.posicao[0] - iAlvo) > 0) {
-			direcaoDiagonal[0] = 1;
-			direcaoDiagonal[1] = 1;
-		}
-		else if ((this.posicao[0] - iAlvo) == (this.posicao[1] - jAlvo) && (this.posicao[0] - iAlvo) < 0) {
 			direcaoDiagonal[0] = -1;
 			direcaoDiagonal[1] = -1;
+		}
+		else if ((this.posicao[0] - iAlvo) == (this.posicao[1] - jAlvo) && (this.posicao[0] - iAlvo) < 0) {
+			direcaoDiagonal[0] = 1;
+			direcaoDiagonal[1] = 1;
 		}
 		else if ((this.posicao[0] - iAlvo) != (this.posicao[1] - jAlvo) && (this.posicao[0] - iAlvo) > 0) {
-			direcaoDiagonal[0] = 1;
-			direcaoDiagonal[1] = -1;
-		}
-		else if ((this.posicao[0] - iAlvo) == (this.posicao[1] - jAlvo) && (this.posicao[0] - iAlvo) < 0) {
 			direcaoDiagonal[0] = -1;
 			direcaoDiagonal[1] = 1;
+		}
+		else if ((this.posicao[0] - iAlvo) != (this.posicao[1] - jAlvo) && (this.posicao[0] - iAlvo) < 0) {
+			direcaoDiagonal[0] = 1;
+			direcaoDiagonal[1] = -1;
 		}
 		
 		return direcaoDiagonal;
