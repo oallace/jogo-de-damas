@@ -53,22 +53,6 @@ public class Peao extends Peca
 		return false;
 	}
 	
-	public boolean ehPossivelComer() {
-		if (ehPossivelComerDirecao(2, 2)) {
-			return true;
-		}
-		else if (ehPossivelComerDirecao(2, -2)) {
-			return true;
-		}
-		else if (ehPossivelComerDirecao(-2, 2)) {
-			return true;
-		}
-		else if (ehPossivelComerDirecao(-2, -2)) {
-			return true;
-		}
-		
-		return false;
-	}
 	
 	public String toString()
 	{
