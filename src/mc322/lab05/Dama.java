@@ -34,8 +34,8 @@ public class Dama extends Peca
 				}
 			}
 			else {
-				Peca peca = this.getTabuleiro().getPeca(posicaoAtual[0], posicaoAtual[1]);
-				if (!this.movimento.ehInimigo(peca)) {
+				Peca pecaAtual = this.getTabuleiro().getPeca(posicaoAtual[0], posicaoAtual[1]);
+				if (!this.movimento.ehInimigo(this, pecaAtual)) {
 					break;
 				}
 				else {
@@ -52,22 +52,6 @@ public class Dama extends Peca
 		return false;
 	}
 	
-	public boolean ehPossivelComer() {
-		if (ehPossivelComerDirecao(1, 1)) {
-			return true;
-		}
-		else if (ehPossivelComerDirecao(1, -1)) {
-			return true;
-		}
-		else if (ehPossivelComerDirecao(-1, 1)) {
-			return true;
-		}
-		else if (ehPossivelComerDirecao(-1, -1)) {
-			return true;
-		}
-		
-		return false;
-	}
 	
 	public String toString()
 	{
