@@ -121,19 +121,18 @@ public class Tabuleiro {
             Peca pecaSelecionada = pecas[iInicio][jInicio];
 
             if (pecaSelecionada.ehMovimentoValido(iFim, jFim)) {
-
-                // Mudar turno se necessario
-                if (this.pecaCapturada != null && pecaSelecionada.ehPossivelComer()) {
-                    mudarTurno();
-                }
-
                 // capturar Peca:
                 capturarPeca();
-
+                
                 // atualiza as coordenadas de inicio e fim:
                 pecaSelecionada.setPosicao(iFim, jFim);
                 pecas[iFim][jFim] = pecaSelecionada;
                 pecas[iInicio][jInicio] = null;
+                
+                // Mudar turno se necessario
+                if (!(this.pecaCapturada != null && pecaSelecionada.ehPossivelComer())) {
+                    mudarTurno();
+                }
 
                 // Promove a peça caso seja necessário
                 promoverPeca(pecaSelecionada);

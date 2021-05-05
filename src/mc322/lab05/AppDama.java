@@ -14,7 +14,7 @@ public class AppDama {
         int iInicio, jInicio, iFim, jFim;
         
         csv = new CSVHandling();
-        csv.setDataSource(entrada); // setar por argumentos de entrada
+        csv.setDataSource(entrada);
         comandos = csv.requestCommands();
         resultado = new String[comandos.length];
         tab = new Tabuleiro(); // setar jogador inicial;
@@ -22,7 +22,7 @@ public class AppDama {
         tab.imprimirTabuleiro();
         for (int i = 0; i < comandos.length; i++)
         {
-            // converte o comando em string em seus valores inteiros:
+            // converte o comando em string em seus valores inteiros compatíveis com a matriz:
             System.out.printf("Source: %s\n", comandos[i].substring(0,2));
             jInicio = Character.getNumericValue(comandos[i].charAt(0)) - Character.getNumericValue('a');
             iInicio = Character.getNumericValue(comandos[i].charAt(1)) - Character.getNumericValue('1');
@@ -30,10 +30,6 @@ public class AppDama {
             jFim = Character.getNumericValue(comandos[i].charAt(3)) - Character.getNumericValue('a');
             iFim = Character.getNumericValue(comandos[i].charAt(4)) - Character.getNumericValue('1');
             // executa o movimento:
-            System.out.println(iInicio);
-            System.out.println(jInicio);
-            System.out.println(iFim);
-            System.out.println(jFim);
             tab.solicitaMovimento(iInicio, jInicio, iFim, jFim);
             tab.imprimirTabuleiro();
             resultado[i] = tab.toString();
