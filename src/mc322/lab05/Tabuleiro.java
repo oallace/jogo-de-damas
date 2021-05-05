@@ -4,7 +4,6 @@ public class Tabuleiro {
     private Peca pecas[][]; // Guarda as peças no tabuleiro
     private int numPecasBrancas;
     private int numPecasPretas;
-    private char jogadorAtual; // 'B' : Brancas ; 'P' : Pretas
     private Peca pecaCapturada; // Peça que foi capturada em um dado turno
 
     /*
@@ -21,7 +20,6 @@ public class Tabuleiro {
         numPecasBrancas = 12;
         numPecasPretas = 12;
         pecaCapturada = null;
-        jogadorAtual = 'B'; // Inicialmente ainda não se sabe o jogador inicial.
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -47,13 +45,6 @@ public class Tabuleiro {
         return null;
     }
 
-    public char getJogadorAtual() {
-        return this.jogadorAtual;
-    }
-
-    public void setJogadorAtual(char jogador) {
-        this.jogadorAtual = jogador;
-    }
 
     public Peca getPecaCapturada() {
         return this.pecaCapturada;
@@ -83,11 +74,6 @@ public class Tabuleiro {
         return false;
     }
 
-    // Altera o jogador do movimento atual
-    public void mudarTurno() {
-        this.jogadorAtual = (this.jogadorAtual == 'B') ? 'P' : 'B';
-    }
-
     // Promover um peão para uma dama caso necessário.
     public void promoverPeca(Peca peca) {
         if (peca instanceof Peao) {
@@ -115,13 +101,10 @@ public class Tabuleiro {
 
     // Realiza o movimento indicado, quando possível. Caso contrário, não faz nada.
     public void solicitaMovimento(int iInicio, int jInicio, int iFim, int jFim) {
-        if (ehEspacoValido(iInicio, jInicio) && !ehEspacoVazio(iInicio, jInicio)
-                && pecas[iInicio][jInicio].getJogador() == this.jogadorAtual && ehEspacoValido(iFim, jFim)
+        if (ehEspacoValido(iInicio, jInicio) && !ehEspacoVazio(iInicio, jInicio) && ehEspacoValido(iFim, jFim)
                 && ehEspacoVazio(iFim, jFim)) {
             Peca pecaSelecionada = pecas[iInicio][jInicio];
             if (pecaSelecionada.ehMovimentoValido(iFim, jFim)) {
-            	Peca pecaCapturadaAux = this.pecaCapturada;
-            	
             	// Capturar peça
             	capturarPeca();
             	
@@ -130,12 +113,6 @@ public class Tabuleiro {
                 pecas[iFim][jFim] = pecaSelecionada;
                 pecas[iInicio][jInicio] = null;
                 
-                
-                // Mudar turno se necessario
-                if (!(pecaCapturadaAux != null && pecaSelecionada.ehPossivelComer())) {
-                	setPecaCapturada(null);
-                    mudarTurno();
-                }
                 
                 // Promove a peça caso seja necessário
                 promoverPeca(pecaSelecionada);
