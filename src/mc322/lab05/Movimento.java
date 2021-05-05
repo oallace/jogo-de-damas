@@ -2,8 +2,8 @@ package mc322.lab05;
 
 public class Movimento {
 	// Analisa se peça de uma dada posição é inimiga.
-	public boolean ehInimigo(Peca peca) {
-		if (peca.getJogador() != peca.getTabuleiro().getJogadorAtual()) {
+	public boolean ehInimigo(Peca peca, Peca pecaAtual) {
+		if (peca.getJogador() != pecaAtual.getJogador()) {
 			return true;
 		}
 		return false;
@@ -25,7 +25,7 @@ public class Movimento {
 		while (posicaoAtual[0] != iAlvo || posicaoAtual[1] != jAlvo) {
 			Peca pecaAtual = peca.getTabuleiro().getPeca(posicaoAtual[0], posicaoAtual[1]);
 			if (pecaAtual != null) {
-				if (!ehInimigo(pecaAtual)) {
+				if (!ehInimigo(peca, pecaAtual)) {
 					return false;
 				}
 				
