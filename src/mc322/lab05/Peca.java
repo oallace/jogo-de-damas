@@ -65,6 +65,10 @@ public class Peca {
 		return direcaoDiagonal;
 	}
 	
+	public boolean ehPossivelComerDirecao(int di, int dj) {
+		return true;
+	}
+	
 	public boolean ehPossivelComer() {
 		return true;
 	}
