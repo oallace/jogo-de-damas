@@ -22,10 +22,12 @@ public class Dama extends Peca
 		
 		posicaoAtual[0] = this.getPosicao()[0] + 1;
 		posicaoAtual[1] = this.getPosicao()[1] + 1;
-		while (this.getTabuleiro().ehEspacoValido(posicaoAtual[0], posicaoAtual[1]) && this.getTabuleiro().ehEspacoVazio(posicaoAtual[0], posicaoAtual[1])) {
-			if (ehMovimentoValido(posicaoAtual[0], posicaoAtual[1]) && this.getTabuleiro().getPecaCapturada() != null) {
-				this.getTabuleiro().setPecaCapturada(null);
-				return true;
+		while (this.getTabuleiro().ehEspacoValido(posicaoAtual[0], posicaoAtual[1])) {
+			if (this.getTabuleiro().ehEspacoVazio(posicaoAtual[0], posicaoAtual[1])) {
+				if (ehMovimentoValido(posicaoAtual[0], posicaoAtual[1]) && this.getTabuleiro().getPecaCapturada() != null) {
+					this.getTabuleiro().setPecaCapturada(null);
+					return true;
+				}
 			}
 			posicaoAtual[0] += 1;
 			posicaoAtual[1] += 1;
@@ -34,10 +36,12 @@ public class Dama extends Peca
 		
 		posicaoAtual[0] = this.getPosicao()[0] + 1;
 		posicaoAtual[1] = this.getPosicao()[1] - 1;
-		while (this.getTabuleiro().ehEspacoValido(posicaoAtual[0], posicaoAtual[1]) && this.getTabuleiro().ehEspacoVazio(posicaoAtual[0], posicaoAtual[1])) {
-			if (ehMovimentoValido(posicaoAtual[0], posicaoAtual[1]) && this.getTabuleiro().getPecaCapturada() != null) {
-				this.getTabuleiro().setPecaCapturada(null);
-				return true;
+		while (this.getTabuleiro().ehEspacoValido(posicaoAtual[0], posicaoAtual[1])) {
+			if (this.getTabuleiro().ehEspacoVazio(posicaoAtual[0], posicaoAtual[1])) {
+				if (ehMovimentoValido(posicaoAtual[0], posicaoAtual[1]) && this.getTabuleiro().getPecaCapturada() != null) {
+					this.getTabuleiro().setPecaCapturada(null);
+					return true;
+				}
 			}
 			posicaoAtual[0] += 1;
 			posicaoAtual[1] -= 1;
@@ -46,10 +50,12 @@ public class Dama extends Peca
 		
 		posicaoAtual[0] = this.getPosicao()[0] - 1;
 		posicaoAtual[1] = this.getPosicao()[1] + 1;
-		while (this.getTabuleiro().ehEspacoValido(posicaoAtual[0], posicaoAtual[1]) && this.getTabuleiro().ehEspacoVazio(posicaoAtual[0], posicaoAtual[1])) {
-			if (ehMovimentoValido(posicaoAtual[0], posicaoAtual[1]) && this.getTabuleiro().getPecaCapturada() != null) {
-				this.getTabuleiro().setPecaCapturada(null);
-				return true;
+		while (this.getTabuleiro().ehEspacoValido(posicaoAtual[0], posicaoAtual[1])) {
+			if (this.getTabuleiro().ehEspacoVazio(posicaoAtual[0], posicaoAtual[1])) {
+				if (ehMovimentoValido(posicaoAtual[0], posicaoAtual[1]) && this.getTabuleiro().getPecaCapturada() != null) {
+					this.getTabuleiro().setPecaCapturada(null);
+					return true;
+				}
 			}
 			posicaoAtual[0] -= 1;
 			posicaoAtual[1] += 1;
@@ -58,10 +64,12 @@ public class Dama extends Peca
 		
 		posicaoAtual[0] = this.getPosicao()[0] - 1;
 		posicaoAtual[1] = this.getPosicao()[1] - 1;
-		while (this.getTabuleiro().ehEspacoValido(posicaoAtual[0], posicaoAtual[1]) && this.getTabuleiro().ehEspacoVazio(posicaoAtual[0], posicaoAtual[1])) {
-			if (ehMovimentoValido(posicaoAtual[0], posicaoAtual[1]) && this.getTabuleiro().getPecaCapturada() != null) {
-				this.getTabuleiro().setPecaCapturada(null);
-				return true;
+		while (this.getTabuleiro().ehEspacoValido(posicaoAtual[0], posicaoAtual[1])) {
+			if (this.getTabuleiro().ehEspacoVazio(posicaoAtual[0], posicaoAtual[1])) {
+				if (ehMovimentoValido(posicaoAtual[0], posicaoAtual[1]) && this.getTabuleiro().getPecaCapturada() != null) {
+					this.getTabuleiro().setPecaCapturada(null);
+					return true;
+				}
 			}
 			posicaoAtual[0] -= 1;
 			posicaoAtual[1] -= 1;
