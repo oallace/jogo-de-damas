@@ -17,62 +17,53 @@ public class Dama extends Peca
 		return this.movimento.untilBlockedPath(this, direcaoDiagonal, iAlvo, jAlvo, 7);
 	}
 	
+	
+	public boolean ehPossivelComerDirecao(int di, int dj) {
+		int numPecasInimigas = 0;
+		int posicaoAtual[] = new int[2];
+		int direcaoDiagonal[] = new int[2];
+		direcaoDiagonal[0] = di;
+		direcaoDiagonal[1] = dj;
+		posicaoAtual[0] = this.getPosicao()[0] + di;
+		posicaoAtual[1] = this.getPosicao()[1] + dj;
+		
+		while (this.getTabuleiro().ehEspacoValido(posicaoAtual[0], posicaoAtual[1])) {
+			if (this.getTabuleiro().ehEspacoVazio(posicaoAtual[0], posicaoAtual[1])) {
+				if (this.movimento.untilBlockedPath(this, direcaoDiagonal, posicaoAtual[0], posicaoAtual[1], 7) && this.getTabuleiro().getPecaCapturada() != null) {
+					return true;
+				}
+			}
+			else {
+				Peca peca = this.getTabuleiro().getPeca(posicaoAtual[0], posicaoAtual[1]);
+				if (!this.movimento.ehInimigo(peca)) {
+					break;
+				}
+				else {
+					numPecasInimigas += 1;
+					if (numPecasInimigas > 1) {
+						break;
+					}
+				}
+			}
+			posicaoAtual[0] += di;
+			posicaoAtual[1] += dj;
+		}
+		
+		return false;
+	}
+	
 	public boolean ehPossivelComer() {
-		int posicaoAtual[] =  new int[2];
-		
-		posicaoAtual[0] = this.getPosicao()[0] + 1;
-		posicaoAtual[1] = this.getPosicao()[1] + 1;
-		while (this.getTabuleiro().ehEspacoValido(posicaoAtual[0], posicaoAtual[1])) {
-			if (this.getTabuleiro().ehEspacoVazio(posicaoAtual[0], posicaoAtual[1])) {
-				if (ehMovimentoValido(posicaoAtual[0], posicaoAtual[1]) && this.getTabuleiro().getPecaCapturada() != null) {
-					this.getTabuleiro().setPecaCapturada(null);
-					return true;
-				}
-			}
-			posicaoAtual[0] += 1;
-			posicaoAtual[1] += 1;
+		if (ehPossivelComerDirecao(1, 1)) {
+			return true;
 		}
-		
-		
-		posicaoAtual[0] = this.getPosicao()[0] + 1;
-		posicaoAtual[1] = this.getPosicao()[1] - 1;
-		while (this.getTabuleiro().ehEspacoValido(posicaoAtual[0], posicaoAtual[1])) {
-			if (this.getTabuleiro().ehEspacoVazio(posicaoAtual[0], posicaoAtual[1])) {
-				if (ehMovimentoValido(posicaoAtual[0], posicaoAtual[1]) && this.getTabuleiro().getPecaCapturada() != null) {
-					this.getTabuleiro().setPecaCapturada(null);
-					return true;
-				}
-			}
-			posicaoAtual[0] += 1;
-			posicaoAtual[1] -= 1;
+		else if (ehPossivelComerDirecao(1, -1)) {
+			return true;
 		}
-		
-		
-		posicaoAtual[0] = this.getPosicao()[0] - 1;
-		posicaoAtual[1] = this.getPosicao()[1] + 1;
-		while (this.getTabuleiro().ehEspacoValido(posicaoAtual[0], posicaoAtual[1])) {
-			if (this.getTabuleiro().ehEspacoVazio(posicaoAtual[0], posicaoAtual[1])) {
-				if (ehMovimentoValido(posicaoAtual[0], posicaoAtual[1]) && this.getTabuleiro().getPecaCapturada() != null) {
-					this.getTabuleiro().setPecaCapturada(null);
-					return true;
-				}
-			}
-			posicaoAtual[0] -= 1;
-			posicaoAtual[1] += 1;
+		else if (ehPossivelComerDirecao(-1, 1)) {
+			return true;
 		}
-		
-		
-		posicaoAtual[0] = this.getPosicao()[0] - 1;
-		posicaoAtual[1] = this.getPosicao()[1] - 1;
-		while (this.getTabuleiro().ehEspacoValido(posicaoAtual[0], posicaoAtual[1])) {
-			if (this.getTabuleiro().ehEspacoVazio(posicaoAtual[0], posicaoAtual[1])) {
-				if (ehMovimentoValido(posicaoAtual[0], posicaoAtual[1]) && this.getTabuleiro().getPecaCapturada() != null) {
-					this.getTabuleiro().setPecaCapturada(null);
-					return true;
-				}
-			}
-			posicaoAtual[0] -= 1;
-			posicaoAtual[1] -= 1;
+		else if (ehPossivelComerDirecao(-1, -1)) {
+			return true;
 		}
 		
 		return false;
