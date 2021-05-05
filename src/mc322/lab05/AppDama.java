@@ -2,7 +2,7 @@ package mc322.lab05;
 
 public class AppDama {
     public static void main(String[] args) {
-        String resultado[] = executaJogo("../testes/teste01.csv");
+        String resultado[] = executaJogo("../testes/arq001.csv");
     }
     
     public static String[] executaJogo(String entrada)
@@ -26,9 +26,11 @@ public class AppDama {
             System.out.printf("Source: %s\n", comandos[i].substring(0,2));
             jInicio = Character.getNumericValue(comandos[i].charAt(0)) - Character.getNumericValue('a');
             iInicio = Character.getNumericValue(comandos[i].charAt(1)) - Character.getNumericValue('1');
+            iInicio = Math.abs(iInicio - 7); //corrige para que a orientação da linha seja adequada com a matriz
             System.out.printf("Target: %s\n", comandos[i].substring(3,5));
             jFim = Character.getNumericValue(comandos[i].charAt(3)) - Character.getNumericValue('a');
             iFim = Character.getNumericValue(comandos[i].charAt(4)) - Character.getNumericValue('1');
+            iFim = Math.abs(iFim - 7); //corrige para que a orientação da linha seja adequada com a matriz
             // executa o movimento:
             tab.solicitaMovimento(iInicio, jInicio, iFim, jFim);
             tab.imprimirTabuleiro();

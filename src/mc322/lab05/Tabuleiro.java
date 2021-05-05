@@ -119,7 +119,6 @@ public class Tabuleiro {
                 && pecas[iInicio][jInicio].getJogador() == this.jogadorAtual && ehEspacoValido(iFim, jFim)
                 && ehEspacoVazio(iFim, jFim)) {
             Peca pecaSelecionada = pecas[iInicio][jInicio];
-
             if (pecaSelecionada.ehMovimentoValido(iFim, jFim)) {
                 // capturar Peca:
                 capturarPeca();
@@ -159,7 +158,7 @@ public class Tabuleiro {
         String linhaAtual;
 
         for (int i = 0; i < 8; i++) {
-            System.out.print(i + 1);
+            System.out.print(8 - i);
             linhaAtual = stringLinha(i);
             for (int k = 0; k < linhaAtual.length(); k++) {
                 System.out.print(" " + linhaAtual.charAt(k));
