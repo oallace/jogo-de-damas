@@ -68,10 +68,6 @@ public class Peca {
 	public boolean ehPossivelComerDirecao(int di, int dj) {
 		return true;
 	}
-	
-	public boolean ehPossivelComer() {
-		return true;
-	}
 
 	public String toString(){	
 		return "X"; // Peça genérica;
