@@ -14,9 +14,7 @@ public class Tabuleiro {
     private static int formaTabuleiro[][] = { { 0, 1, 0, 1, 0, 1, 0, 1 }, { 1, 0, 1, 0, 1, 0, 1, 0 },
             { 0, 1, 0, 1, 0, 1, 0, 1 }, { 1, 0, 1, 0, 1, 0, 1, 0 }, { 0, 1, 0, 1, 0, 1, 0, 1 },
             { 1, 0, 1, 0, 1, 0, 1, 0 }, { 0, 1, 0, 1, 0, 1, 0, 1 }, { 1, 0, 1, 0, 1, 0, 1, 0 } };
-        // char linhas[] = { '8', '7', '6', '5', '4', '3', '2', '1' };
     private String linhas = "87654321";
-        // char colunas[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
     private String colunas = "abcdefgh";
 
     // Inicia um novo tabuleiro completo
