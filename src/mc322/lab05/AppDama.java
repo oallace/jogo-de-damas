@@ -1,11 +1,7 @@
 package mc322.lab05;
 
 public class AppDama {
-    public static void main(String[] args) {
-        String resultado[] = executaJogo("../testes/arq001.csv");
-    }
-    
-    public static String[] executaJogo(String entrada)
+    public static String[] executaJogo(String entrada, String saida)
     {
         CSVHandling csv;
         String comandos[];
@@ -17,7 +13,7 @@ public class AppDama {
         csv.setDataSource(entrada);
         comandos = csv.requestCommands();
         resultado = new String[comandos.length];
-        tab = new Tabuleiro(); // setar jogador inicial;
+        tab = new Tabuleiro();
         System.out.println("Início:");
         tab.imprimirTabuleiro();
         for (int i = 0; i < comandos.length; i++)
@@ -36,7 +32,12 @@ public class AppDama {
             tab.imprimirTabuleiro();
             resultado[i] = tab.toString();
         }
+        tab.exportarArquivo(saida);
         
         return resultado;
     }
+    public static void main(String[] args) {
+        String resultado[] = executaJogo("testes/teste01.csv", "testes/arq001.out");
+    }
+    
 }

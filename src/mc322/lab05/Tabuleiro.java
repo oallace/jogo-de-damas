@@ -5,14 +5,21 @@ public class Tabuleiro {
     private int numPecasBrancas;
     private int numPecasPretas;
     private Peca pecaCapturada; // Peça que foi capturada em um dado turno
-
+    private boolean movimentoExecutado; // Indica se o último movimento solicitado ao tabuleiro foi executado
+    private CSVHandling csv;
+    
     /*
      * Descreve a forma inicial do tabuleiro: 1: espaço pode ser ocupado por uma
      * peça 0: espaço inválido
      */
-    private static int formaTabuleiro[][] = { { 0, 1, 0, 1, 0, 1, 0, 1 }, { 1, 0, 1, 0, 1, 0, 1, 0 },
-            { 0, 1, 0, 1, 0, 1, 0, 1 }, { 1, 0, 1, 0, 1, 0, 1, 0 }, { 0, 1, 0, 1, 0, 1, 0, 1 },
-            { 1, 0, 1, 0, 1, 0, 1, 0 }, { 0, 1, 0, 1, 0, 1, 0, 1 }, { 1, 0, 1, 0, 1, 0, 1, 0 }, };
+    private static int formaTabuleiro[][] = { { 0, 1, 0, 1, 0, 1, 0, 1 }, 
+                                              { 1, 0, 1, 0, 1, 0, 1, 0 },
+                                              { 0, 1, 0, 1, 0, 1, 0, 1 }, 
+                                              { 1, 0, 1, 0, 1, 0, 1, 0 }, 
+                                              { 0, 1, 0, 1, 0, 1, 0, 1 },
+                                              { 1, 0, 1, 0, 1, 0, 1, 0 }, 
+                                              { 0, 1, 0, 1, 0, 1, 0, 1 }, 
+                                              { 1, 0, 1, 0, 1, 0, 1, 0 }};
 
     // Inicia um novo tabuleiro completo
     Tabuleiro() {
@@ -20,6 +27,7 @@ public class Tabuleiro {
         numPecasBrancas = 12;
         numPecasPretas = 12;
         pecaCapturada = null;
+        csv = new CSVHandling();
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -44,7 +52,6 @@ public class Tabuleiro {
         }
         return null;
     }
-
 
     public Peca getPecaCapturada() {
         return this.pecaCapturada;
@@ -75,7 +82,7 @@ public class Tabuleiro {
     }
 
     // Promover um peão para uma dama caso necessário.
-    public void promoverPeca(Peca peca) {
+    private void promoverPeca(Peca peca) {
         if (peca instanceof Peao) {
             int posicaoPeca[] = peca.getPosicao();
             char jogador = peca.getJogador();
@@ -105,19 +112,23 @@ public class Tabuleiro {
                 && ehEspacoVazio(iFim, jFim)) {
             Peca pecaSelecionada = pecas[iInicio][jInicio];
             if (pecaSelecionada.ehMovimentoValido(iFim, jFim)) {
-            	// Capturar peça
-            	capturarPeca();
-            	
+                this.movimentoExecutado = true;
+                // Capturar peça
+                capturarPeca();
+
                 // atualiza as coordenadas de inicio e fim:
                 pecaSelecionada.setPosicao(iFim, jFim);
                 pecas[iFim][jFim] = pecaSelecionada;
                 pecas[iInicio][jInicio] = null;
-                
-                
+
                 // Promove a peça caso seja necessário
                 promoverPeca(pecaSelecionada);
+                return;
             }
         }
+        this.movimentoExecutado = false;
+        System.out.println("Movimento Inválido");
+        
     }
 
     // Retorna uma string que representa a linha
@@ -158,7 +169,18 @@ public class Tabuleiro {
         return res;
     }
 
-    public void exportarArquivo() {
-
+    public void exportarArquivo(String caminho) {
+        csv.setDataExport(caminho);
+        String estado[];
+        if (movimentoExecutado)
+        {
+            estado = new String[64];
+        }
+        else
+        {
+            estado = new String[1];
+            estado[0] = "erro";
+        }
+        csv.exportState(estado);
     }
 }
